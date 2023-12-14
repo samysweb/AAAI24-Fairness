@@ -1,0 +1,29 @@
+number = r'[-]?(\d*\.\d*|\d+)'
+id = r'\w[\d\w]*'
+setScale = "." "setScale" "(" number "," ("BigDecimal.ROUND_DOWN" /"BigDecimal.ROUND_UP") ")"
+multiply =  "." "multiply" "(" expression ")"
+add = "." "add" "(" expression ")"
+subtract =  "." "subtract" "(" expression ")"
+divide = "." "divide" "(" expression ("," number "," ("BigDecimal.ROUND_DOWN" /"BigDecimal.ROUND_UP") )? ")"
+compareTo = "." "compareTo" "(" expression ")" ("<=" / ">=" / "<" / ">" / "==") number
+valueOf = "BigDecimal" "." "valueOf" "(" expression ")"
+longValue = "." "longValue" "(" ")"
+methods = multiply / divide / add / subtract / setScale / compareTo / longValue
+arrayAccess = id "[" expression "]"
+call = (arrayAccess / parens / valueOf / id ) methods+
+parens = "(" expression ")"
+var = id ("." id)?
+newBD = "new BigDecimal" "(" number ")"
+term0 = ( number / call / arrayAccess / valueOf / newBD  / parens / var )
+term90 = term0 ("/" term0)*
+term91 = term90 ("*" term90)*
+term100 = term91 ("-" term91)*
+term101 = term100 ("+" term100)*
+term110 = term101 (("<=" / ">=" / "<" / ">") term101)*
+term120 = term110 (("==" / "!=") term110)*
+term130 = term120 ("&&" term120)*
+term140 = term130 ("||" term130)*
+array_expression = "{" term140 ("," term140)* "}"
+expression = term140 / array_expression
+assign = id "=" expression
+start = assign / expression EOF
