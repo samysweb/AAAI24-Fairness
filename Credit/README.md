@@ -93,3 +93,5 @@ We can quantify this case as follows:
 |-------------------|-----------------------|-----------------------|
 | credit2           | `testfun2`            | 0.229                   |
 | credit3           | `testfun1`            | 0.267                   |
+
+For the case of path-specific fairness run the analysis on `testfun1path`/`testfun2path`
