@@ -76,3 +76,20 @@ The `[function name]` is determined as follows:
 ### Threshold comparison
 The folder `./c/threshold-comparison` contains a program with a flexible threshold of the credit score which is nonetheless dependent on the group.
 In this case, we have pre-generated counting problems which can be processed by `ganak` or `approxmc`
+
+### Causal Graph
+We also analyzed the credit 2 and credit 3 w.r.t. a causal model which determines the credit score based on income and zip code.
+The corresponding code can be found in `./c/causal_credit.c`.
+We can quantify this case as follows:
+- Interactively start the container's bash via:  
+  `docker run -it -v $(pwd)/c:/experiments/results samweb/countersharp-experiments:artifact`
+- Generate the problems for the model counter (replacing `[function name]`):
+  `python3 -m counterSharp --amh /tmp/amh.dimacs --amm /tmp/amm.dimacs --asm results/CREDIT-ASM --ash /tmp/ash.dimacs --con /tmp/con.dimacs -d --function [function name] results/causal_credit.c`
+- Compute the numerator of the formula in Level 7:
+  `ganak results/CREDIT-ASM` (alternatively this can be done using an approximate model counter: `approxmc results/CREDIT-ASM`)
+- This number must be divided by (number of groups)\*(number of unprotected values) (in this case 2*490=980)
+
+| Problem           | `[function name]`     | Expected Spread       |
+|-------------------|-----------------------|-----------------------|
+| credit2           | `testfun2`            | 0.229                   |
+| credit3           | `testfun1`            | 0.267                   |
