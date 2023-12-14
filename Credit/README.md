@@ -60,7 +60,7 @@ To this end, proceed as follows:
 - Generate the problems for the model counter (replacing `[function name]`):
   `python3 -m counterSharp --amh /tmp/amh.dimacs --amm /tmp/amm.dimacs --asm results/CREDIT-ASM --ash /tmp/ash.dimacs --con /tmp/con.dimacs -d --function [function name] results/credit.c`
 - Compute the numerator of the formula in Level 7:
-  `ganak results/CREDIT-ASM`
+  `ganak results/CREDIT-ASM` (alternatively this can be done using an approximate model counter: `approxmc results/CREDIT-ASM`)
 - This number must be divided by (number of groups)\*(number of unprotected values) (in this case 10*10=100)
 
 The `[function name]` is determined as follows:
@@ -72,3 +72,7 @@ The `[function name]` is determined as follows:
 | credit3 NonUnif\*   | `testfun3NonUniform`  | 0.3                   |
 
 \* In this case we expanded $|\mathcal{U}|$ to 100 and thus have to divide by 1000
+
+### Threshold comparison
+The folder `./c/threshold-comparison` contains a program with a flexible threshold of the credit score which is nonetheless dependent on the group.
+In this case, we have pre-generated counting problems which can be processed by `ganak` or `approxmc`
